@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {FormGroup,Input } from 'reactstrap';
 import '../../styles/main.css'
+import { fetchAllItems } from '../../actions/getItemAction'
+
 
 class ItemList extends Component {
 
@@ -13,9 +16,16 @@ class ItemList extends Component {
         this.props.setSelectedItem(event.target.value);
     }
 
+    componentDidMount() {
+     
+        this.props.dispatch(fetchAllItems());
+
+    }
+
+
     render() {
 
-        const items = this.props.items;
+        const items = this.props.itemList;
         const itemArray = [];
         itemArray.push(<option key="epmty">{}</option>)
         items.forEach(item => {
@@ -31,4 +41,8 @@ class ItemList extends Component {
     }
 }
 
-export default ItemList;
+const mapStateToProps = state => ({
+    itemList: state.itemReducer
+});
+
+export default connect(mapStateToProps) (ItemList);
