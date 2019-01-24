@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Row, Col, Input ,Button } from 'reactstrap'
+import { connect } from 'react-redux';
+import { Row, Col, Input ,Button } from 'reactstrap';
 import ItemList from './ItemList';
+
 
 class NewOrderItem extends Component {
 
@@ -27,7 +29,6 @@ class NewOrderItem extends Component {
     
     }
 
-
     setSelectedItem(item){
      
         this.setState({
@@ -37,7 +38,7 @@ class NewOrderItem extends Component {
 
     getSelectedItem(itemCode){
         var newItem = {}
-        this.props.items.forEach(item => {
+        this.props.itemList.forEach(item => {
             if(item.itemCode === itemCode){
                 newItem = item;
             }
@@ -58,7 +59,7 @@ class NewOrderItem extends Component {
         return (
             <Row className="product-row">
 
-                <Col md="3"><ItemList  setSelectedItem={this.setSelectedItem} items={this.props.items}></ItemList></Col>
+                <Col md="3"><ItemList  setSelectedItem={this.setSelectedItem}></ItemList></Col>
                 <Col  md="3">                
                     <Input type="number" placeholder="quantity..." onChange={this.handleProductQuantityTextChange}></Input>
                 </Col>
@@ -73,4 +74,8 @@ class NewOrderItem extends Component {
 
 }
 
-export default NewOrderItem;
+const mapStateToProps = state => ({
+    itemList: state.itemReducer
+});
+
+export default   connect(mapStateToProps)(NewOrderItem) ;

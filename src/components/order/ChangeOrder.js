@@ -95,7 +95,7 @@ class ChangeOrder extends Component {
                             </tbody>
                         </Table>
                     </Row>
-                    <NewOrderItem items={this.props.items} addNewItemToOrder={this.addNewItemToOrder} />
+                    <NewOrderItem  addNewItemToOrder={this.addNewItemToOrder} />
                     <OrderItemsCost order={this.state.order} updateTotalCostForItem={this.updateTotalCostForItem} />
                 </Container>
             </div>
