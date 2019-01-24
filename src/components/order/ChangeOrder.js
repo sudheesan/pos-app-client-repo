@@ -42,13 +42,40 @@ class ChangeOrder extends Component {
     }
 
     addNewItemToOrder(newItem) {
-        let newOrder = this.state.order;
-        newOrder.orderItems.push(newItem);
+        let newOrder = this.state.order.orderItems ? this.state.order :{} ;
+        if(!newOrder.orderItems){
+            newOrder.orderItems=[];
+            newOrder.status = "pending";
+            newOrder.orderItems.push(newItem)
+        }
+        else{
+            newOrder = this.upDateOrderWithNewItem(newOrder,newItem);
+        }
         newOrder.totalAmount = this.getTotalCostForitems(newOrder);
+        console.log("current order",newOrder);
         this.setState({
             order: newOrder
         });
+    }
 
+    upDateOrderWithNewItem(order,newItem){
+        let currentOrder = order;
+        let itemExist =false;
+        let itemIndex = -1;
+        currentOrder.orderItems.forEach((currentItem,index)=>{
+            console.log("The currentOrder",currentItem.item)
+            if(currentItem.item.itemCode === newItem.item.itemCode){
+                itemExist = true;
+                itemIndex = index;
+            }
+        });
+        if(itemExist){
+            currentOrder.orderItems[itemIndex].itemQuantity+=newItem.itemQuantity;
+        }
+        else{
+            currentOrder.orderItems.push(newItem);
+        }
+        return currentOrder;
     }
 
 
@@ -61,21 +88,24 @@ class ChangeOrder extends Component {
     }
 
     render() {
-        const items = this.state.order.orderItems;
+
+       
         const itemRows = []
-
-        items.forEach(newItem => {
-            itemRows.push(
-                <tr key={newItem.item.itemCode}>
-                    <td>{newItem.item.itemName}</td>
-                    <td>{newItem.item.unitPrice}</td>
-                    <td>{newItem.itemQuantity}</td>
-                    <td className="text-center"><ChangeItemQuantity changeType="+" item={newItem} changeQuantity={this.changeQuantity} /></td>
-                    <td className="text-center"><ChangeItemQuantity changeType="-" item={newItem} changeQuantity={this.changeQuantity} /></td>
-                </tr>
-            );
-        });
-
+        if(this.state.order.orderItems){
+            const items = this.state.order.orderItems;
+            items.forEach(newItem => {
+                itemRows.push(
+                    <tr key={newItem.item.itemCode}>
+                        <td>{newItem.item.itemName}</td>
+                        <td>{newItem.item.unitPrice}</td>
+                        <td>{newItem.itemQuantity}</td>
+                        <td className="text-center"><ChangeItemQuantity changeType="+" item={newItem} changeQuantity={this.changeQuantity} /></td>
+                        <td className="text-center"><ChangeItemQuantity changeType="-" item={newItem} changeQuantity={this.changeQuantity} /></td>
+                    </tr>
+                );
+            });
+        }
+       
         return (
             <div>
                 <Container>

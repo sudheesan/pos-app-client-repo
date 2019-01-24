@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter ,Row,Col} from 'reactstrap';
 import ChangeOrder from './ChangeOrder'
 
-
-class OrderListItem extends Component {
+class NewOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            order: this.props.order,
+            order: {},
             modal: false
         }
         this.toggle = this.toggle.bind(this);
@@ -22,15 +21,16 @@ class OrderListItem extends Component {
 
     render() {
         const order = this.state.order;
-        
-        return (
 
-            <tr onClick={this.toggle}>
-                <td>{order.orderNumber}</td>
-                <td>Burger*2 + Pizza*2</td>
-                <td>RS {order.totalAmount}.00</td>
+        return (
+            <div >
+                <Row>
+                    <Col md={{ size: 3, order: 2, offset: 9 }}>
+                        <Button  onClick={this.toggle} color="primary" >New Order</Button>
+                    </Col>
+                </Row>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} size='lg' centered={true}>
-                    <ModalHeader toggle={this.toggle}>Order - {order.orderNumber}</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>New Order</ModalHeader>
                     <ModalBody>
                         <ChangeOrder items={this.props.items} order={order} />
                     </ModalBody>
@@ -38,10 +38,9 @@ class OrderListItem extends Component {
                         <Button color="secondary" onClick={this.toggle}>Back</Button>
                     </ModalFooter>
                 </Modal>
-            </tr>
-
+            </div>
         );
     }
 }
 
-export default OrderListItem;
+export default NewOrder;
