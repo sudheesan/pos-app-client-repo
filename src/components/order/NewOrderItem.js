@@ -10,7 +10,7 @@ class NewOrderItem extends Component {
         super(props);
         this.state = {
             selectedItem:null,
-            productQuantity: 0
+            productQuantity: null
         }
         this.setSelectedItem= this.setSelectedItem.bind(this);
         this.addNewItemToOrder = this.addNewItemToOrder.bind(this);
@@ -18,12 +18,12 @@ class NewOrderItem extends Component {
     }
 
     addNewItemToOrder() {
-        let currentItemQuantity = this.state.productQuantity;this.getSelectedItem(this.state.selectedItem)
+        let currentItemQuantity = this.state.productQuantity;
         let itemToadd = this.getSelectedItem(this.state.selectedItem);
-        if(currentItemQuantity >0){
+        if(currentItemQuantity >0 ){
             this.props.addNewItemToOrder({
                 item : itemToadd,
-                itemQuantity: currentItemQuantity
+                itemQuantity: parseInt(currentItemQuantity)
             });
         }
     
