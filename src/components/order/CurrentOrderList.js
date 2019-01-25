@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import OrderListItem from "./OrderListItem"
 import NewOrder from "./NewOrder";
-import { fetchAllPendingOrders } from '../../actions/getAllPendingOrdersAction'
+import { fetchAllPendingOrders } from '../../actions/orderAction'
 import { Table } from 'reactstrap'
 class CurrentOrderList extends Component {
 
@@ -19,9 +19,11 @@ class CurrentOrderList extends Component {
         console.log("render", currentPendingOrders);
         const currentPendingOrderItemArray = [];
 
-        currentPendingOrders.forEach((pendingOrder) => {
-            currentPendingOrderItemArray.push(<OrderListItem key={pendingOrder._id} order={pendingOrder}></OrderListItem>)
-        })
+        if(currentPendingOrders){
+            currentPendingOrders.forEach((pendingOrder) => {
+                currentPendingOrderItemArray.push(<OrderListItem key={pendingOrder._id} order={pendingOrder}></OrderListItem>)
+            })
+        }
         return (
             <div>
                 <Table bordered hover>
@@ -45,7 +47,7 @@ class CurrentOrderList extends Component {
 
 
 const mapStateToProps = state => ({
-    orderList: state.orderReducer
+    orderList: state.orderReducer.orders
 });
 
 export default connect(mapStateToProps)(CurrentOrderList);

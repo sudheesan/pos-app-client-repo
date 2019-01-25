@@ -5,5 +5,9 @@ export default{
 
     getAllOrders : ()=>{
         return axios.get(api.orders);
+    },
+    updateCurrentOrder : (order)=>{
+        return axios.put(api.orders+"/"+order._id,order)
+        
     }
 }

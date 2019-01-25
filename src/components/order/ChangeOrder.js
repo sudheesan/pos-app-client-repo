@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Table ,Container, Row} from 'reactstrap'
+import {connect} from 'react-redux';
+import { Table ,Container, Row,Button} from 'reactstrap'
 import NewOrderItem from './NewOrderItem';
 import OrderItemsCost from './OrderItemsCost';
 import ChangeItemQuantity from './ChangeItemQuantity';
+import { updateOrder } from '../../actions/orderAction'
 import '../../styles/main.css'
 class ChangeOrder extends Component {
     constructor(props) {
@@ -13,8 +15,13 @@ class ChangeOrder extends Component {
         this.addNewItemToOrder = this.addNewItemToOrder.bind(this);
         this.updateTotalCostForItem = this.updateTotalCostForItem.bind(this);
         this.changeQuantity = this.changeQuantity.bind(this);
+        this.updateOrder = this.updateOrder.bind(this);
 
     };
+
+    updateOrder(){
+        this.props.dispatch(updateOrder(this.state.order));
+    }
 
     getTotalCostForitems(order) {
         let totalCost = 0;
@@ -127,6 +134,7 @@ class ChangeOrder extends Component {
                     </Row>
                     <NewOrderItem  addNewItemToOrder={this.addNewItemToOrder} />
                     <OrderItemsCost order={this.state.order} updateTotalCostForItem={this.updateTotalCostForItem} />
+                    <Button onClick={this.updateOrder}></Button>
                 </Container>
             </div>
 
@@ -137,4 +145,4 @@ class ChangeOrder extends Component {
 
 }
 
-export default ChangeOrder;
+export default connect()(ChangeOrder);
