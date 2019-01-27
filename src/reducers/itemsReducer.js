@@ -5,7 +5,6 @@ const itemReducer = (state = [], action) => {
         case FETCH_ITEMS_SUCCESS:
             // All done: set loading "false".
             // Also, replace the items with the ones from the server
-            console.log(action);
             return action.payload;
             
            
