@@ -9,5 +9,8 @@ export default{
     updateCurrentOrder : (order)=>{
         return axios.put(api.orders+"/"+order._id,order)
         
+    },
+    addNewOrder :(order)=>{
+        return axios.post(api.orders, order);
     }
 }
