@@ -5,7 +5,8 @@ import NewOrderItem from './NewOrderItem';
 import OrderItemsCost from './OrderItemsCost';
 import ChangeItemQuantity from './ChangeItemQuantity';
 import NewOrderButton from './NewOrderButton';
-import { updateOrder , addNewOrder ,setCurrentOrderSuccess} from '../../actions/orderAction';
+import RemoveItem from './RemoveItem';
+import { updateOrder, addNewOrder, setCurrentOrderSuccess } from '../../actions/orderAction';
 import '../../styles/main.css';
 
 class ChangeOrder extends Component {
@@ -18,21 +19,34 @@ class ChangeOrder extends Component {
         this.updateTotalCostForItem = this.updateTotalCostForItem.bind(this);
         this.changeQuantity = this.changeQuantity.bind(this);
         this.newOrder = this.newOrder.bind(this);
-        this.updateState = this.updateState.bind(this); 
+        this.updateState = this.updateState.bind(this);
+        this.removeItem = this.removeItem.bind(this);
     };
 
-    componentWillUnmount(){
-        if(this.state.order._id){
+    componentWillUnmount() {
+        if (this.state.order._id) {
             this.props.dispatch(updateOrder(this.state.order));
         }
-    
+    }
+
+    removeItem(itemToRemove){
+        let currentOrder = this.state.order;
+        currentOrder.orderItems.forEach((orderToChange,index)=>{
+            if(orderToChange.item.itemCode === itemToRemove.item.itemCode){
+                currentOrder.orderItems.splice(index,1);
+            }
+        });
+        currentOrder.totalAmount = this.getTotalCostForitems(currentOrder);
+        this.updateState(currentOrder);
+
+
     }
 
     async newOrder() {
-       await this.props.dispatch(addNewOrder(this.state.order))
-       this.setState({
-           order:this.props.currentOrder
-       });
+        await this.props.dispatch(addNewOrder(this.state.order))
+        this.setState({
+            order: this.props.currentOrder
+        });
     }
 
     getTotalCostForitems(order) {
@@ -43,7 +57,7 @@ class ChangeOrder extends Component {
         return totalCost;
     }
 
-    async updateState(order){
+    async updateState(order) {
         await this.props.dispatch(setCurrentOrderSuccess(order));
         this.setState({
             order: this.props.currentOrder,
@@ -60,7 +74,7 @@ class ChangeOrder extends Component {
                 newOrder.orderItems[index] = newItem;
                 newOrder.totalAmount = this.getTotalCostForitems(newOrder);
                 this.updateState(newOrder);
-               
+
             }
         })
     }
@@ -76,7 +90,7 @@ class ChangeOrder extends Component {
         }
         newOrder.totalAmount = this.getTotalCostForitems(newOrder);
         this.updateState(newOrder);
-       
+
     }
 
     upDateOrderWithNewItem(order, newItem) {
@@ -119,6 +133,8 @@ class ChangeOrder extends Component {
                         <td>{newItem.itemQuantity}</td>
                         <td className="text-center"><ChangeItemQuantity changeType="+" item={newItem} changeQuantity={this.changeQuantity} /></td>
                         <td className="text-center"><ChangeItemQuantity changeType="-" item={newItem} changeQuantity={this.changeQuantity} /></td>
+                        <td className="text-center"><RemoveItem  item={newItem} removeItem={this.removeItem} /></td>
+
                     </tr>
                 );
             });
@@ -135,8 +151,10 @@ class ChangeOrder extends Component {
                                     <td>unit-price</td>
                                     <td>Quantity</td>
 
-                                   <td className="text-center">Add</td>
-                                    <td className="text-center">Remove</td>
+                                    <td className="text-center">Add</td>
+                                    <td className="text-center">Reduce</td>
+                                    <td className="text-center"></td>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -145,7 +163,7 @@ class ChangeOrder extends Component {
                         </Table>
                     </Row>
                     <NewOrderItem addNewItemToOrder={this.addNewItemToOrder} />
-                    <OrderItemsCost order={this.state.order}  />
+                    <OrderItemsCost order={this.state.order} />
                     <NewOrderButton newOrder={this.newOrder} order={this.state.order}></NewOrderButton>
                 </Container>
             </div>
@@ -157,7 +175,7 @@ class ChangeOrder extends Component {
 
 }
 const mapStateToProps = state => ({
-    currentOrder:state.orderReducer.currentOrder
+    currentOrder: state.orderReducer.currentOrder
 });
 
 export default connect(mapStateToProps)(ChangeOrder);

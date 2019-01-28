@@ -12,6 +12,31 @@
     padding: 0;
 }
 
-.orderlist-container{
-    justify-content: center;
+.orderlist-container {
+    margin-top: 6%;
+    max-height: 60vh;
+    overflow-y: scroll;
+    
 }
+
+.main-container{
+    overflow-x: hidden;
+
+}
+
+.new-order-launch{
+    max-width: 49vw;
+    margin-left: 25vw;
+    margin-top: 1%;
+}
+
+@media all and (min-width: 480px) {
+    .Login {
+      padding: 60px 0;
+    }
+  
+    .Login form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  }
