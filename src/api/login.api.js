@@ -4,6 +4,6 @@ import api from '../utils/api'
 export default{
 
     login : (credentials)=>{
-        return axios.post(api.login,{ withCredentials: true,data:credentials});
+        return axios.post(api.login,credentials);
     }
 };

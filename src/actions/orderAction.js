@@ -73,6 +73,7 @@ export function updateOrder(order) {
         error => console.log('An error occurred.', error))
       .then((json) => {
         dispatch(updateOrderSuccess(json.data));
+        dispatch(setCurrentOrderSuccess(json.data));
         dispatch(fetchAllPendingOrders());
       }
       )

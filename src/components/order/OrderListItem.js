@@ -9,14 +9,13 @@ class OrderListItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            order: this.props.order,
             modal: false
         }
         this.toggle = this.toggle.bind(this);
     }
 
     toggle() {
-        this.props.dispatch(setCurrentOrderSuccess(this.state.order));
+        this.props.dispatch(setCurrentOrderSuccess(this.props.order));
         this.setState({
             modal: !this.state.modal
         });
@@ -24,7 +23,7 @@ class OrderListItem extends Component {
 
 
     render() {
-        const order = this.state.order;
+        const order = this.props.order;
         
         return (
 
