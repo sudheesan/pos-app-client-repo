@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Container, Row } from 'reactstrap'
+import { Table, Container, Row } from 'reactstrap';
 import NewOrderItem from './NewOrderItem';
 import OrderItemsCost from './OrderItemsCost';
 import ChangeItemQuantity from './ChangeItemQuantity';
 import NewOrderButton from './NewOrderButton';
 import RemoveItem from './RemoveItem';
 import { updateOrder, addNewOrder, setCurrentOrderSuccess } from '../../actions/orderAction';
+import 'react-notifications/lib/notifications.css';
 import '../../styles/main.css';
 
 class ChangeOrder extends Component {
@@ -23,6 +24,7 @@ class ChangeOrder extends Component {
         this.removeItem = this.removeItem.bind(this);
     };
 
+  
     componentWillUnmount() {
         if (this.state.order._id) {
             this.props.dispatch(updateOrder(this.state.order));
@@ -98,7 +100,7 @@ class ChangeOrder extends Component {
         let itemExist = false;
         let itemIndex = -1;
         currentOrder.orderItems.forEach((currentItem, index) => {
-            console.log("The currentOrder", currentItem.item)
+           
             if (currentItem.item.itemCode === newItem.item.itemCode) {
                 itemExist = true;
                 itemIndex = index;
@@ -166,16 +168,17 @@ class ChangeOrder extends Component {
                     <OrderItemsCost order={this.state.order} />
                     <NewOrderButton newOrder={this.newOrder} order={this.state.order}></NewOrderButton>
                 </Container>
+              
             </div>
 
         );
 
     }
 
-
 }
 const mapStateToProps = state => ({
-    currentOrder: state.orderReducer.currentOrder
+    currentOrder: state.orderReducer.currentOrder,
+    updateNoification : state.orderReducer.updateNoification
 });
 
 export default connect(mapStateToProps)(ChangeOrder);

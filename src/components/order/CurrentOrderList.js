@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import OrderListItem from "./OrderListItem"
 import NewOrder from "./NewOrder";
 import { fetchAllPendingOrders } from '../../actions/orderAction'
 import { Table, Row, Col } from 'reactstrap'
 import '../../styles/main.css';
+import 'react-notifications/lib/notifications.css';
+
 class CurrentOrderList extends Component {
 
+    constructor(props) {
+        super(props);
+        this.createNotification = this.createNotification.bind(this);
+
+    }
     componentDidMount() {
         const login = JSON.parse(localStorage.getItem('login'));
         if (login && login.isLoggedIn) {
@@ -18,8 +26,32 @@ class CurrentOrderList extends Component {
 
     }
 
-    render() {
+    createNotification(alert) {
+        
+        return () => {
+            switch (alert.type) {
+                case 'info':
+                    NotificationManager.info(alert.notification);
+                    break;
+                case 'success':
+                    NotificationManager.success(alert.notification, 'Order', 2000);
+                    console.log("insid sueccess")
+                    break;
+                case 'warning':
+                    NotificationManager.warning(alert.notification, 'Order', 2000);
+                    break;
+                case 'error':
+                    NotificationManager.error(alert.notification, 'Order', 2000);
+                    break;
+                default :
+                 break;
+            }
+        };
+    }
 
+    render() {
+        // var notification = this.createNotification(this.props.message);
+        // notification();
         var currentPendingOrders = this.props.orderList;
         const currentPendingOrderItemArray = [];
         console.log("current orderlist", currentPendingOrders);
@@ -49,6 +81,7 @@ class CurrentOrderList extends Component {
 
                 </Row>
                 <NewOrder></NewOrder>
+                <NotificationContainer />
             </div>
 
 
@@ -58,7 +91,8 @@ class CurrentOrderList extends Component {
 
 
 const mapStateToProps = state => ({
-    orderList: state.orderReducer.orders
+    orderList: state.orderReducer.orders,
+    message: state.orderReducer.updateNotification
 });
 
 export default connect(mapStateToProps)(CurrentOrderList);
