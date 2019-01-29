@@ -32,12 +32,15 @@ class Login extends Component {
 
     render() {
         return (
-            <form className="login" onSubmit={this.go.bind(this)}>
-                <h3>Sign in</h3>
-                <input type="text" ref="username" placeholder="enter you username" />
-                <input type="password" ref="password" placeholder="enter password" />
-                <input type="submit" value="Login" />
+            <div className='login-container'>
+                 <form className="login" onSubmit={this.go.bind(this)}>
+                <h1 className="login-title">POS</h1>
+                <input type="text" ref="username" className="login-input" placeholder="enter you username" />
+                <input type="password" ref="password" className="login-input" placeholder="enter password" />
+                <input type="submit" className='login-button'  value="Login" />
             </form>
+            </div>
+           
         )
     }
 }

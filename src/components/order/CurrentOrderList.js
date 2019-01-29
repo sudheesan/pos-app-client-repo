@@ -54,10 +54,8 @@ class CurrentOrderList extends Component {
         // notification();
         var currentPendingOrders = this.props.orderList;
         const currentPendingOrderItemArray = [];
-        console.log("current orderlist", currentPendingOrders);
         if (currentPendingOrders) {
             currentPendingOrders.forEach((pendingOrder) => {
-                console.log("When fetching", pendingOrder);
                 currentPendingOrderItemArray.push(<OrderListItem key={pendingOrder._id} order={pendingOrder}></OrderListItem>)
             })
         }

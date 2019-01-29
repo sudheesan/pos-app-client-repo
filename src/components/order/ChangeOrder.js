@@ -31,11 +31,11 @@ class ChangeOrder extends Component {
         }
     }
 
-    removeItem(itemToRemove){
+    removeItem(itemToRemove) {
         let currentOrder = this.state.order;
-        currentOrder.orderItems.forEach((orderToChange,index)=>{
-            if(orderToChange.item.itemCode === itemToRemove.item.itemCode){
-                currentOrder.orderItems.splice(index,1);
+        currentOrder.orderItems.forEach((orderToChange, index) => {
+            if (orderToChange.item.itemCode === itemToRemove.item.itemCode) {
+                currentOrder.orderItems.splice(index, 1);
             }
         });
         currentOrder.totalAmount = this.getTotalCostForitems(currentOrder);
@@ -68,15 +68,12 @@ class ChangeOrder extends Component {
 
 
     changeQuantity(newItem) {
-
         let newOrder = this.state.order;
-
         this.state.order.orderItems.forEach((orderItem, index) => {
             if (orderItem.item.itemCode === newItem.item.itemCode) {
                 newOrder.orderItems[index] = newItem;
                 newOrder.totalAmount = this.getTotalCostForitems(newOrder);
                 this.updateState(newOrder);
-
             }
         })
     }
@@ -123,23 +120,19 @@ class ChangeOrder extends Component {
     }
 
     render() {
-        console.log("Change order", this.state.order)
-        const itemRows = []
+        let itemRows = []
         if (this.state.order.orderItems) {
             const items = this.state.order.orderItems;
-            items.forEach(newItem => {
-                itemRows.push(
-                    <tr key={newItem.item.itemCode}>
-                        <td>{newItem.item.itemName}</td>
-                        <td>{newItem.item.unitPrice}</td>
-                        <td>{newItem.itemQuantity}</td>
-                        <td className="text-center"><ChangeItemQuantity changeType="+" item={newItem} changeQuantity={this.changeQuantity} /></td>
-                        <td className="text-center"><ChangeItemQuantity changeType="-" item={newItem} changeQuantity={this.changeQuantity} /></td>
-                        <td className="text-center"><RemoveItem  item={newItem} removeItem={this.removeItem} /></td>
-
-                    </tr>
-                );
-            });
+            itemRows = items.map((newItem) =>
+                <tr key={newItem.item.itemCode}>
+                    <td>{newItem.item.itemName}</td>
+                    <td>{newItem.item.unitPrice}</td>
+                    <td>{newItem.itemQuantity}</td>
+                    <td className="text-center"><ChangeItemQuantity changeType="+" item={newItem} changeQuantity={this.changeQuantity} /></td>
+                    <td className="text-center"><ChangeItemQuantity changeType="-" item={newItem} changeQuantity={this.changeQuantity} /></td>
+                    <td className="text-center"><RemoveItem item={newItem} removeItem={this.removeItem} /></td>
+                </tr>
+            );
         }
 
         return (
@@ -152,11 +145,9 @@ class ChangeOrder extends Component {
                                     <td>Name</td>
                                     <td>unit-price</td>
                                     <td>Quantity</td>
-
                                     <td className="text-center">Add</td>
                                     <td className="text-center">Reduce</td>
                                     <td className="text-center"></td>
-
                                 </tr>
                             </thead>
                             <tbody>
