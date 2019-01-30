@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setIsLoginSuccess } from '../../actions/loginAction'
-import auth from '../../api/login.api'
-
+import auth from '../../api/login.api';
+import cookies from '../../utils/cookie.util'
 class Login extends Component {
 
     constructor(props) {
@@ -11,7 +11,11 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(setIsLoginSuccess(true))
+        const usrNameCookie = cookies.getCookie('userName');
+        this.props.dispatch(setIsLoginSuccess(true));
+        if (usrNameCookie) {
+            this.props.history.goBack();
+        }
     }
 
     go(e) {
@@ -19,34 +23,33 @@ class Login extends Component {
         let username = this.refs.username.value;
         let password = this.refs.password.value;
         auth.login({ userName: username, password: password }).then((res) => {
-            localStorage.setItem("login", JSON.stringify({ isLoggedIn: true }));
+            cookies.addNewCookie('userName', res.data.auth.userName);
+            cookies.addNewCookie('token', res.data.auth.authToken);
             this.props.history.push('/currentOrderList');
             this.props.dispatch(setIsLoginSuccess(false));
 
         })
-        .catch((error) => {
-            console.log(error, "error")
-        })
+            .catch((error) => {
+                console.log(error, "error")
+            })
 
     }
 
     render() {
         return (
             <div className='login-container'>
-                 <form className="login" onSubmit={this.go.bind(this)}>
-                <h1 className="login-title">POS</h1>
-                <input type="text" ref="username" className="login-input" placeholder="enter you username" />
-                <input type="password" ref="password" className="login-input" placeholder="enter password" />
-                <input type="submit" className='login-button'  value="Login" />
-            </form>
+                <form className="login" onSubmit={this.go.bind(this)}>
+                    <h1 className="login-title">POS</h1>
+                    <input type="text" ref="username" className="login-input" placeholder="enter you username" />
+                    <input type="password" ref="password" className="login-input" placeholder="enter password" />
+                    <input type="submit" className='login-button' value="Login" />
+                </form>
             </div>
-           
+
         )
     }
 }
 
-const mapStateToProps = state => ({
-    auth: state.loginReducer.auth
-});
 
-export default connect(mapStateToProps)(Login);
+
+export default connect()(Login);

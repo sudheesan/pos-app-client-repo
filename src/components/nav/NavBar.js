@@ -1,6 +1,6 @@
 
-import React ,{Component}from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Collapse,
   Navbar,
@@ -12,11 +12,13 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem
+} from 'reactstrap';
+import { setIsLoginSuccess } from '../../actions/loginAction';
+import cookies from '../../utils/cookie.util'
 
-  import {setIsLoginSuccess} from '../../actions/loginAction'
 
- class NavBar extends Component {
+class NavBar extends Component {
   constructor(props) {
     super(props);
 
@@ -24,7 +26,7 @@ import {
     this.logout = this.logout.bind(this);
     this.state = {
       isOpen: false,
-      
+
     };
   }
   toggle() {
@@ -33,11 +35,14 @@ import {
     });
   }
 
-  logout(){
-    localStorage.clear();
+  logout() {
+    cookies.deleteAllCookies();
     this.props.history.push('/');
     this.props.dispatch(setIsLoginSuccess(true));
   }
+
+ 
+
 
   render() {
     return (
