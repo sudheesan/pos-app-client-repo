@@ -7,7 +7,7 @@ import { fetchAllPendingOrders } from '../../actions/orderAction'
 import { Table, Row, Col } from 'reactstrap'
 import '../../styles/main.css';
 import 'react-notifications/lib/notifications.css';
-
+import cookies from '../../utils/cookie.util'
 class CurrentOrderList extends Component {
 
     constructor(props) {
@@ -16,14 +16,12 @@ class CurrentOrderList extends Component {
 
     }
     componentDidMount() {
-        const login = JSON.parse(localStorage.getItem('login'));
-        if (login && login.isLoggedIn) {
+        const usrNameCookie = cookies.getCookie('userName');
+        if (usrNameCookie) {
             this.props.dispatch(fetchAllPendingOrders());
         } else {
             this.props.history.push("/login");
         }
-
-
     }
 
     createNotification(alert) {

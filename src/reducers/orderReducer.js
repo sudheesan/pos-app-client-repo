@@ -1,8 +1,8 @@
-import { FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAILURE, SET_CURRENT_ORDER_SUCCESS, SET_CURRENT_ORDER_FAILURE, ADD_NEW_ORDER_SUCCESS, ADD_NEW_ORDER_FAILURE,UPDATE_ORDER_ALERT_SUCCESS } from '../actions/orderAction'
+import { FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAILURE, SET_CURRENT_ORDER_SUCCESS, SET_CURRENT_ORDER_FAILURE, ADD_NEW_ORDER_SUCCESS, ADD_NEW_ORDER_FAILURE, UPDATE_ORDER_ALERT_SUCCESS } from '../actions/orderAction'
 const intialState = {
     oders: [],
     currentOrder: {},
-    updateNotification :{}
+    updateNotification: {}
 }
 const orderReducer = (state = intialState, action) => {
     switch (action.type) {
@@ -37,7 +37,9 @@ const orderReducer = (state = intialState, action) => {
 
         case UPDATE_ORDER_FAILURE:
 
-            return action.payload;
+            return {
+                ...state
+            }
 
         case SET_CURRENT_ORDER_SUCCESS:
 
@@ -59,14 +61,16 @@ const orderReducer = (state = intialState, action) => {
 
         case ADD_NEW_ORDER_FAILURE:
 
-            return action.payload
+            return {
+                ...state
+            }
 
         case UPDATE_ORDER_ALERT_SUCCESS:
             return {
                 ...state,
-                updateNotification:action.payload
+                updateNotification: action.payload
             }
-           
+
         default:
             return state;
     }
