@@ -4,12 +4,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CurrentOrderList from '../order/CurrentOrderList';
 import Login from '../login/Login';
 import NavBar from '../nav/NavBar';
+import withLoginAuthenticated from './routeDecider';
 
 const MainRoute = () => (<Router>
     <Switch>
-        <Route exact path="/" component={CurrentOrderList} />
-        <Route path="/login" component={Login} />
-        <Route path="/currentOrderList" component={CurrentOrderList} />
+        <Route exact path="/" component={withLoginAuthenticated(CurrentOrderList)} />
+        <Route path="/login" component={Login}/>
+        <Route path="/currentOrderList" component={withLoginAuthenticated(CurrentOrderList)} />
     </Switch>
 </Router>);
 

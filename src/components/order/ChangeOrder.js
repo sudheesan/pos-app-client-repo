@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Container, Row } from 'reactstrap';
+import DeepEqual from 'deep-equal';
 import NewOrderItem from './NewOrderItem';
 import OrderItemsCost from './OrderItemsCost';
 import ChangeItemQuantity from './ChangeItemQuantity';
@@ -25,9 +26,16 @@ class ChangeOrder extends Component {
     };
 
   
+    componentDidMount(){
+        this.setState({
+            initialOrder:Object.assign({},this.props.currentOrder)
+        });
+    }
+
     componentWillUnmount() {
-        if (this.state.order._id) {
-            this.props.dispatch(updateOrder(this.state.order));
+        console.log(this.props.currentOrder,this.state.initialOrder);
+        if(!DeepEqual(this.state.initialOrder,this.state.order) && this.state.order._id){
+            this.props.dispatch(updateOrder(this.props.currentOrder));
         }
     }
 
@@ -45,10 +53,7 @@ class ChangeOrder extends Component {
     }
 
     async newOrder() {
-        await this.props.dispatch(addNewOrder(this.state.order))
-        this.setState({
-            order: this.props.currentOrder
-        });
+         this.props.dispatch(addNewOrder(this.state.order))
     }
 
     getTotalCostForitems(order) {
@@ -139,8 +144,8 @@ class ChangeOrder extends Component {
             <div>
                 <Container>
                     <Row>
-                        <Table bordered >
-                            <thead>
+                        <Table hover>
+                            <thead className='editable-order-table-thead'>
                                 <tr>
                                     <td>Name</td>
                                     <td>unit-price</td>

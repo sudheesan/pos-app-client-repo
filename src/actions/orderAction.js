@@ -1,6 +1,7 @@
-import orders from '../api/orders.api'
+import orders from '../api/orders.api';
+import ActionAlert from '../components/notification/ActionNotifier'
 
-
+export const FETCH_ORDERS_START = 'FETCH_ORDERS_START';
 export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
 export const FETCH_ORDERS_FAILURE = 'FETCH_ORDERS_FAILURE';
 export const UPDATE_ORDER_SUCCESS = 'UPDATE_ORDER_SUCCESS';
@@ -11,6 +12,11 @@ export const ADD_NEW_ORDER_SUCCESS = 'ADD_NEW_ORDER_SUCCESS';
 export const ADD_NEW_ORDER_FAILURE = 'ADD_NEW_ORDER_FAILURE';
 export const UPDATE_ORDER_ALERT_SUCCESS = 'UPDATE_ORDER_ALERT_SUCCESS';
 export const UPDATE_ORDER_ALERT_FAILURE = 'UPDATE_ORDER_ALERT_FAILURE';
+
+export const fetchOrderStart = () => ({
+  type: FETCH_ORDERS_START,
+  payload: true
+});
 
 export const fetchOrdersSuccess = orders => ({
   type: FETCH_ORDERS_SUCCESS,
@@ -62,8 +68,10 @@ export const addNewOrderFailure = order => ({
   payload: order
 });
 
+
 export function fetchAllPendingOrders() {
   return dispatch => {
+    dispatch(fetchOrderStart());
     return orders.getAllOrders()
       .then(
         response => response,
@@ -81,10 +89,10 @@ export function updateOrder(order) {
     return orders.updateCurrentOrder(order)
       .then(
         response => response,
-        error => console.log('An error occurred.', error))
+        (error) => {throw error} )
       .then((json) => {
         dispatch(updateOrderSuccess(json.data));
-       // dispatch(updateOrderAlertSuccess({notification:'order updated sucessfully',type:'success'}));
+        ActionAlert.createNotification({type:'success',notification:'Order updated successfully'})();
         dispatch(setCurrentOrderSuccess(json.data));
         dispatch(fetchAllPendingOrders());
       }
@@ -92,7 +100,7 @@ export function updateOrder(order) {
       .catch((error) => {
         console.log(error)
         dispatch(updateOrderFailure(error));
-        dispatch(updateOrderAlertSuccess({notification:'error while updating',type:'error'}));
+        ActionAlert.createNotification({type:'error',notification:'error while updating order'})();
       });
   }
 }
@@ -103,16 +111,18 @@ export function addNewOrder(order) {
     return orders.addNewOrder(order)
       .then(
         response => response,
-        error => console.log('An error occurred.', error))
+        (error) =>{throw error} )
       .then((json) => {
         dispatch(addNewOrderSuccess(json.data));
+        ActionAlert.createNotification({type:'success',notification:'Order added successfully'})();
         dispatch(setCurrentOrderSuccess(json.data));
         dispatch(fetchAllPendingOrders());
       }
       )
       .catch((error) => {
         console.log(error)
-        dispatch(addNewOrderFailure(error))
+        dispatch(addNewOrderFailure(error));
+        ActionAlert.createNotification({type:'warning',notification:error.response.data.message})();
       });
   }
 }

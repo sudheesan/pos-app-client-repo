@@ -41,30 +41,31 @@ class NavBar extends Component {
     this.props.dispatch(setIsLoginSuccess(true));
   }
 
- 
+
 
 
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">POS App</NavbarBrand>
+        <Navbar color="dark" light expand="md">
+          <NavbarBrand href="/"><span style={{ color: 'white' }}>POSINT OF SALE System</span></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
               <NavItem>
                 <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Options
+                  <span style={{ color: 'white' }}>
+                    Options
+                  </span>
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem onClick={this.logout}>
+
                     Logout
+
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

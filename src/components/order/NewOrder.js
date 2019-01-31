@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Row, Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Row, Col,Badge } from 'reactstrap';
 import ChangeOrder from './ChangeOrder';
 import { setCurrentOrderSuccess } from '../../actions/orderAction';
 import '../../styles/main.css';
+import { FaPlusCircle } from 'react-icons/fa';
 
 
 class NewOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            order: {},
             modal: false
         }
         this.toggle = this.toggle.bind(this);
     }
 
+
     toggle() {
-        this.props.dispatch(setCurrentOrderSuccess(this.state.order));
+        this.props.dispatch(setCurrentOrderSuccess({}));
         this.setState({
             modal: !this.state.modal
         });
@@ -29,13 +30,13 @@ class NewOrder extends Component {
             <div className='new-order-launch'>
                 <Row >
                     <Col>
-                         <Button className="float-right" onClick={this.toggle} color="primary" >New Order</Button>
+                         <FaPlusCircle size='50' color='green' className="float-right" onClick={this.toggle}/>
                     </Col>
                 </Row>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} size='lg' centered={true}>
-                    <ModalHeader toggle={this.toggle}>New Order</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Order <Badge color="secondary">New</Badge></ModalHeader>
                     <ModalBody>
-                        <ChangeOrder items={this.props.items} />
+                        <ChangeOrder/>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={this.toggle}>Back</Button>

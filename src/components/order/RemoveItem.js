@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button} from 'reactstrap'
+import { FaMinus } from 'react-icons/fa';
 
 
 class RemoveItem extends Component {
@@ -16,8 +16,10 @@ class RemoveItem extends Component {
     render() {
       
             return (
-               
-                     <Button onClick={this.removeItem} color="primary">Remove Item</Button>
+                    <div>
+                        <FaMinus cursor='pointer' size="40" onClick={this.removeItem} color="red"/>
+                    </div>
+                     
                );
     
     }

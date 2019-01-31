@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Input, Button } from 'reactstrap';
+import { Row, Col, Input } from 'reactstrap';
 import ItemList from './ItemList';
+import { FaPlus } from 'react-icons/fa';
 
 
 class NewOrderItem extends Component {
@@ -56,19 +57,20 @@ class NewOrderItem extends Component {
 
 
     render() {
+        console.log(this.props.isLoading)
         return (
             <Row className="product-row">
-                <Col md="2">
-                    <span>
+                <Col md="3">
+                    <div className='editable-order-item-lis-label'>
                         Select Item:
-                    </span>
+                    </div>
                 </Col>
                 <Col md="3"><ItemList setSelectedItem={this.setSelectedItem}></ItemList></Col>
                 <Col md="3">
                     <Input type="number" placeholder="quantity..." onChange={this.handleProductQuantityTextChange} min="0"></Input>
                 </Col>
-                <Col md="2">
-                    <Button color="primary" onClick={this.addNewItemToOrder}>Add Item</Button>
+                <Col md="3">
+                    {!this.props.isLoading && <FaPlus color="green" size="30" cursor='pointer' onClick={this.addNewItemToOrder}/>}
                 </Col>
             </Row>
 
@@ -79,7 +81,8 @@ class NewOrderItem extends Component {
 }
 
 const mapStateToProps = state => ({
-    itemList: state.itemReducer
+    itemList: state.itemReducer.items,
+    isLoading :state.itemReducer.isLoading
 });
 
 export default connect(mapStateToProps)(NewOrderItem);
