@@ -1,17 +1,26 @@
-import { FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAILURE, SET_CURRENT_ORDER_SUCCESS, SET_CURRENT_ORDER_FAILURE, ADD_NEW_ORDER_SUCCESS, ADD_NEW_ORDER_FAILURE, UPDATE_ORDER_ALERT_SUCCESS } from '../actions/orderAction'
+import { FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAILURE, SET_CURRENT_ORDER_SUCCESS, SET_CURRENT_ORDER_FAILURE, ADD_NEW_ORDER_SUCCESS, ADD_NEW_ORDER_FAILURE ,FETCH_ORDERS_START} from '../actions/orderAction'
 const intialState = {
     oders: [],
     currentOrder: {},
-    updateNotification: {}
+    updateNotification: {},
+    isLoading :true
 }
 const orderReducer = (state = intialState, action) => {
     switch (action.type) {
+        case FETCH_ORDERS_START:
+            // All done: set loading "false".
+            // Also, replace the items with the ones from the server
+            return {
+                ...state,
+                isLoading:action.payload
+            }
         case FETCH_ORDERS_SUCCESS:
             // All done: set loading "false".
             // Also, replace the items with the ones from the server
             return {
                 ...state,
-                orders: action.payload
+                orders: action.payload,
+                isLoading:false
             }
 
         case FETCH_ORDERS_FAILURE:
@@ -24,7 +33,7 @@ const orderReducer = (state = intialState, action) => {
             // Do whatever seems right for your use case.
             return {
                 ...state,
-                loading: false,
+                isLoading:false,
                 error: action.payload.error,
             };
         case UPDATE_ORDER_SUCCESS:
@@ -65,11 +74,6 @@ const orderReducer = (state = intialState, action) => {
                 ...state
             }
 
-        case UPDATE_ORDER_ALERT_SUCCESS:
-            return {
-                ...state,
-                updateNotification: action.payload
-            }
 
         default:
             return state;

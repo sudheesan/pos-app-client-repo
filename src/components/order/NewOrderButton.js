@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Row, Col } from 'reactstrap'
+import { Button, Row, Col } from 'reactstrap';
+import '../../styles/main.css';
 
 
 class NewOrderButton extends Component {
@@ -20,8 +21,9 @@ class NewOrderButton extends Component {
         } else {
             return (
                 <Row>
-                    <Col md={{size:4 , offset:4}}>
-                        <Button onClick={this.addNewOrder} color="primary" >Add Order</Button>
+                    <Col className='add-order-buton'>
+                    <Button outline onClick={this.addNewOrder} color="success" size="lg" >Add Order</Button>
+                        
                     </Col>
                 </Row>);
         }

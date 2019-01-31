@@ -1,10 +1,13 @@
 import items from '../api/items.api'
 
-
+export const FETCH_ITEMS_START = 'FETCH_ITEMS_START';
 export const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS';
 export const FETCH_ITEMS_FAILURE = 'FETCH_ITEMS_FAILURE';
 
-
+export const fetchItemStart = () => ({
+  type: FETCH_ITEMS_START,
+  payload:  true 
+});
 export const fetchItemSuccess = items => ({
   type: FETCH_ITEMS_SUCCESS,
   payload:  items 
@@ -17,6 +20,7 @@ export const fetchItemsFailure = error => ({
 
 export function fetchAllItems() {
   return dispatch => {
+    dispatch(fetchItemStart());
     return items.getAllItems()
       .then(
         response => response,
