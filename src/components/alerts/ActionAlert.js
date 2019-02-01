@@ -13,14 +13,12 @@ class ActionAlert extends Component {
     }
 
     createNotification(alert) {
-        console.log("Inside create notification")
         return () => {
             switch (alert.type) {
                 case 'info':
                     NotificationManager.info(alert.notification);
                     break;
                 case 'success':
-                    console.log("insid sueccess")
                     NotificationManager.success(alert.notification, 'Order', 2000);
                     break;
                 case 'warning':
@@ -35,7 +33,6 @@ class ActionAlert extends Component {
 
 
     render() {
-        console.log(this.props.message)
         this.createNotification(this.props.message)
         return (<NotificationContainer />);
     }

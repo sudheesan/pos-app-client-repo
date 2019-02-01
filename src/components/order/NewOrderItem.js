@@ -57,7 +57,6 @@ class NewOrderItem extends Component {
 
 
     render() {
-        console.log(this.props.isLoading)
         return (
             <Row className="product-row">
                 <Col md="3">

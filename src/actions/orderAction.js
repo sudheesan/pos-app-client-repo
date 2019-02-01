@@ -87,7 +87,7 @@ export function updateOrder(order) {
       }
       )
       .catch((error) => {
-        console.log(error)
+       
         dispatch(updateOrderFailure(error));
         ActionAlert.createNotification({type:'error',notification:'error while updating order'})();
       });
@@ -109,7 +109,6 @@ export function addNewOrder(order) {
       }
       )
       .catch((error) => {
-        console.log(error)
         dispatch(addNewOrderFailure(error));
         ActionAlert.createNotification({type:'warning',notification:error.response.data.message})();
       });

@@ -46,7 +46,6 @@ class Login extends Component {
 
         })
             .catch((error) => {
-                console.log(error.response);
                 this.createNotification({ type: 'error', notification: error.response.data.message })();
             })
 
