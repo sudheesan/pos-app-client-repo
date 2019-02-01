@@ -1,6 +1,6 @@
 import auth from '../api/login.api'
 
-
+export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const SET_ISLOGIN_SUCCESS = 'SET_ISLOGIN_SUCCESS';
@@ -11,7 +11,7 @@ export const loginSuccess = login => ({
 });
 
 export const setIsLoginSuccess = login =>({
-    type:SET_ISLOGIN_SUCCESS,
+    type:LOGIN_SUCCESS,
     payload:login
 });
 
@@ -19,6 +19,12 @@ export const loginFailure = error => ({
   type: LOGIN_FAILURE,
   payload: { error }
 });
+
+export const loginStart = () =>({
+  type:LOGIN_START,
+  payload:true
+})
+
 
 export function login(credentials) {
   return dispatch => {

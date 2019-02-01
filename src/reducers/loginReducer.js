@@ -1,17 +1,24 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, SET_ISLOGIN_SUCCESS } from '../actions/loginAction'
+import { LOGIN_SUCCESS, LOGIN_FAILURE, SET_ISLOGIN_SUCCESS , LOGIN_START } from '../actions/loginAction'
 const initialState = {
     auth: {},
-    isLogin: false
+    isLogin: false,
+    isAuthenticating : false,
 }
 const loginreducer = (state = initialState, action) => {
     switch (action.type) {
+
+        case LOGIN_START:
+            return{
+                ...state,
+                isAuthenticating : action.payload
+            }
         case LOGIN_SUCCESS:
 
             return {
                 ...state,
+                isAuthenticating : false,
                 auth: action.payload,
-                isLogin: false
-
+                isLogin: action.payload
             }
 
         case LOGIN_FAILURE:
@@ -19,7 +26,8 @@ const loginreducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                error: action.payload.error
+                error: action.payload.error,
+                isAuthenticating : false
             };
 
         case SET_ISLOGIN_SUCCESS:

@@ -10,8 +10,7 @@ export const SET_CURRENT_ORDER_SUCCESS = 'SET_CURRENT_ORDER_SUCCESS';
 export const SET_CURRENT_ORDER_FAILURE = 'SET_CURRENT_ORDER_FAILURE';
 export const ADD_NEW_ORDER_SUCCESS = 'ADD_NEW_ORDER_SUCCESS';
 export const ADD_NEW_ORDER_FAILURE = 'ADD_NEW_ORDER_FAILURE';
-export const UPDATE_ORDER_ALERT_SUCCESS = 'UPDATE_ORDER_ALERT_SUCCESS';
-export const UPDATE_ORDER_ALERT_FAILURE = 'UPDATE_ORDER_ALERT_FAILURE';
+
 
 export const fetchOrderStart = () => ({
   type: FETCH_ORDERS_START,
@@ -31,16 +30,6 @@ export const fetchOrdersFailure = error => ({
 export const updateOrderSuccess = order => ({
   type: UPDATE_ORDER_SUCCESS,
   payload: order
-});
-
-export const updateOrderAlertSuccess = alert => ({
-  type: UPDATE_ORDER_ALERT_SUCCESS,
-  payload: alert
-});
-
-export const updateOrderAlertFailure = alert => ({
-  type: UPDATE_ORDER_ALERT_FAILURE,
-  payload: alert
 });
 
 export const updateOrderFailure = error => ({
