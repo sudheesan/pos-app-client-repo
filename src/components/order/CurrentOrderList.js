@@ -1,74 +1,60 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NotificationContainer } from 'react-notifications';
-import OrderListItem from "./OrderListItem";
-import NewOrder from "./NewOrder";
-import { fetchAllPendingOrders } from '../../actions/orderAction';
-import ActionSpiner from '../spinner/ActionSpinner';
-import { Table, Row, Col } from 'reactstrap';
-import '../../styles/main.css';
-import 'react-notifications/lib/notifications.css';
-import { FaHashtag } from 'react-icons/fa';
-
-
+import OrderListItem from "./OrderListItem"
+// import orderService from '../../api/orders.api';
+import itemService from '../../api/items.api';
+import { fetchAllPendingOrders } from '../../actions/getAllPendingOrdersAction'
+import { Table } from 'reactstrap'
 class CurrentOrderList extends Component {
-
-
+    
     componentDidMount() {
-        this.props.history.push('/currentOrderList');
+        let itemsAndOrderPromiseArray = [];
+        itemsAndOrderPromiseArray.push(itemService.getAllItems());
+
+        Promise.all(itemsAndOrderPromiseArray).then((result) => {
+            this.setState({
+                items : result[0].data
+
+            });
+        })
+        .catch(((error) => {
+            console.log(error);
+        }));
+
         this.props.dispatch(fetchAllPendingOrders());
+
     }
 
     render() {
-       
-        var currentPendingOrders = this.props.orderList;
+
+        var  currentPendingOrders = this.props.orderList;
+        
+        console.log("render", currentPendingOrders);
         const currentPendingOrderItemArray = [];
-        if (currentPendingOrders) {
-            currentPendingOrders.forEach((pendingOrder) => {
-                currentPendingOrderItemArray.push(<OrderListItem key={pendingOrder._id} order={pendingOrder}></OrderListItem>)
-            })
-        }
+        
+        currentPendingOrders.forEach((pendingOrder) => {
+            currentPendingOrderItemArray.push(<OrderListItem items={this.state.items} key={pendingOrder._id} order={pendingOrder}></OrderListItem>)
+        })
         return (
-            <div>
-                <Row>
-                    <Col className="order-list-header" md={{ size: 8, offset: 2 }}>
-
-                        <span>
-                            Pending Orders
-                       </span>
-                    </Col >
-                </Row>
-                <Row>
-                    <Col className='orderlist-container' md={{ size: 8, offset: 2 }}>
-                       {this.props.isLoading && <ActionSpiner width='5rem' height='5rem'  color='secondary'></ActionSpiner>}
-                       {!this.props.isLoading &&  <Table  hover>
-                            <thead>
-                                <tr>
-                                    <th className='order-list-table-header'><FaHashtag></FaHashtag></th>
-                                    <th className='text-center order-list-table-header'>Status</th>
-                                    <th className='text-center order-list-table-header'>Total amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {currentPendingOrderItemArray}
-                            </tbody>
-                        </Table>} 
-                    </Col>
-
-                </Row>
-                {!this.props.isLoading && <NewOrder></NewOrder>}
-                <NotificationContainer />
-            </div>
-
-
+            <Table bordered hover>
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Items</th>
+                        <th>Total amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {currentPendingOrderItemArray}
+                </tbody>
+            </Table>
         );
     }
 }
 
 
 const mapStateToProps = state => ({
-    orderList: state.orderReducer.orders,
-    isLoading: state.orderReducer.isLoading
+    orderList: state
 });
 
 export default connect(mapStateToProps)(CurrentOrderList);
