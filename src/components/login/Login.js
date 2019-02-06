@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setIsLoginSuccess, loginStart } from '../../actions/loginAction'
+import { setIsLoginSuccess, loginStart, loginFailure } from '../../actions/loginAction'
 import auth from '../../api/login.api';
 import cookies from '../../utils/cookie.util';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
@@ -45,10 +45,10 @@ class Login extends Component {
             this.props.dispatch(setIsLoginSuccess(false));
 
         })
-            .catch((error) => {
-                console.log(error.response);
-                this.createNotification({ type: 'error', notification: error.response.data.message })();
-            })
+        .catch((error) => {
+            this.props.dispatch(loginFailure(error));
+            this.createNotification({ type: 'error', notification: error.response.data.message })();
+        })
 
     }
 

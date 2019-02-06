@@ -31,10 +31,18 @@ export function login(credentials) {
     return auth.login(credentials)
       .then(
         response => response,
-        error => console.log('An error occurred.', error))
-      .then(json => {
+        (error) => {
+          console.log("error occured");
+          throw error
+        }
+      )
+      .then((json) => {
+        console.log("success",json)
         dispatch(loginSuccess(json.data.auth));
       })
-      .catch(error => dispatch(loginFailure(error)));
+      .catch((error) => {
+        
+        dispatch(loginFailure(error))
+      });
   };
 }
