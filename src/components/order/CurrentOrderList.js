@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NotificationContainer } from 'react-notifications';
 import OrderListItem from "./OrderListItem";
 import NewOrder from "./NewOrder";
 import { fetchAllPendingOrders } from '../../actions/orderAction';
 import ActionSpiner from '../spinner/ActionSpinner';
 import { Table, Row, Col } from 'reactstrap';
 import '../../styles/main.css';
-import 'react-notifications/lib/notifications.css';
 import { FaHashtag } from 'react-icons/fa';
 
 
@@ -57,7 +55,6 @@ class CurrentOrderList extends Component {
 
                 </Row>
                 {!this.props.isLoading && <NewOrder></NewOrder>}
-                <NotificationContainer />
             </div>
 
 

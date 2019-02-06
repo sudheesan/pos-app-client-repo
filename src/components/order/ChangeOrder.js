@@ -33,7 +33,6 @@ class ChangeOrder extends Component {
     }
 
     componentWillUnmount() {
-        console.log(this.props.currentOrder,this.state.initialOrder);
         if(!DeepEqual(this.state.initialOrder,this.state.order) && this.state.order._id){
             this.props.dispatch(updateOrder(this.props.currentOrder));
         }

@@ -24,7 +24,7 @@ export function fetchAllItems() {
     return items.getAllItems()
       .then(
         response => response,
-        error => console.log('An error occurred.', error))
+        error => {throw error})
       .then(json => {
         dispatch(fetchItemSuccess(json.data));
       })

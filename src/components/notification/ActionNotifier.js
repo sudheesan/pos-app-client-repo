@@ -12,7 +12,6 @@ export default{
                     break;
                 case 'success':
                     NotificationManager.success(alert.notification, 'Order', 2000);
-                    console.log("insid sueccess")
                     break;
                 case 'warning':
                     NotificationManager.warning(alert.notification, 'Order', 2000);

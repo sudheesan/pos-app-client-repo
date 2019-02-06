@@ -64,7 +64,7 @@ export function fetchAllPendingOrders() {
     return orders.getAllOrders()
       .then(
         response => response,
-        error => console.log('An error occurred.', error))
+        error => {throw error})
       .then(json => {
         dispatch(fetchOrdersSuccess(json.data));
       })
@@ -87,7 +87,6 @@ export function updateOrder(order) {
       }
       )
       .catch((error) => {
-        console.log(error)
         dispatch(updateOrderFailure(error));
         ActionAlert.createNotification({type:'error',notification:'error while updating order'})();
       });
@@ -109,7 +108,6 @@ export function addNewOrder(order) {
       }
       )
       .catch((error) => {
-        console.log(error)
         dispatch(addNewOrderFailure(error));
         ActionAlert.createNotification({type:'warning',notification:error.response.data.message})();
       });
