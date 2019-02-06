@@ -1,9 +1,11 @@
-import { FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAILURE, SET_CURRENT_ORDER_SUCCESS, SET_CURRENT_ORDER_FAILURE, ADD_NEW_ORDER_SUCCESS, ADD_NEW_ORDER_FAILURE ,FETCH_ORDERS_START} from '../actions/orderAction'
+import { FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAILURE, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAILURE, SET_CURRENT_ORDER_SUCCESS, SET_CURRENT_ORDER_FAILURE, ADD_NEW_ORDER_SUCCESS, ADD_NEW_ORDER_FAILURE, FETCH_ORDERS_START, ADD_NEW_ORDER_START } from '../actions/orderAction'
 const intialState = {
     oders: [],
     currentOrder: {},
     updateNotification: {},
-    isLoading :true
+    isLoading: true,
+    isOrderAdding:false
+
 }
 const orderReducer = (state = intialState, action) => {
     switch (action.type) {
@@ -12,7 +14,7 @@ const orderReducer = (state = intialState, action) => {
             // Also, replace the items with the ones from the server
             return {
                 ...state,
-                isLoading:action.payload
+                isLoading: action.payload
             }
         case FETCH_ORDERS_SUCCESS:
             // All done: set loading "false".
@@ -20,7 +22,7 @@ const orderReducer = (state = intialState, action) => {
             return {
                 ...state,
                 orders: action.payload,
-                isLoading:false
+                isLoading: false
             }
 
         case FETCH_ORDERS_FAILURE:
@@ -33,7 +35,7 @@ const orderReducer = (state = intialState, action) => {
             // Do whatever seems right for your use case.
             return {
                 ...state,
-                isLoading:false,
+                isLoading: false,
                 error: action.payload.error,
             };
         case UPDATE_ORDER_SUCCESS:
@@ -61,17 +63,26 @@ const orderReducer = (state = intialState, action) => {
 
             return action.payload;
 
+        case ADD_NEW_ORDER_START:
+            return  {
+                ...state,
+                isOrderAdding :true
+            }
+
         case ADD_NEW_ORDER_SUCCESS:
 
             return {
                 ...state,
-                currentOrder: action.payload
+                currentOrder: action.payload,
+                isOrderAdding:false
+
             }
 
         case ADD_NEW_ORDER_FAILURE:
 
             return {
-                ...state
+                ...state,
+                isOrderAdding:false
             }
 
 

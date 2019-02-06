@@ -23,7 +23,6 @@ class NewOrderButton extends Component {
                 <Row>
                     <Col className='add-order-buton'>
                     <Button outline onClick={this.addNewOrder} color="success" size="lg" >Add Order</Button>
-                        
                     </Col>
                 </Row>);
         }
