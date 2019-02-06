@@ -8,6 +8,7 @@ export const UPDATE_ORDER_SUCCESS = 'UPDATE_ORDER_SUCCESS';
 export const UPDATE_ORDER_FAILURE = 'UPDATE_ORDER_FAILURE';
 export const SET_CURRENT_ORDER_SUCCESS = 'SET_CURRENT_ORDER_SUCCESS';
 export const SET_CURRENT_ORDER_FAILURE = 'SET_CURRENT_ORDER_FAILURE';
+export const ADD_NEW_ORDER_START = 'ADD_NEW_ORDER_START';
 export const ADD_NEW_ORDER_SUCCESS = 'ADD_NEW_ORDER_SUCCESS';
 export const ADD_NEW_ORDER_FAILURE = 'ADD_NEW_ORDER_FAILURE';
 
@@ -45,6 +46,11 @@ export const setCurrentOrderSuccess = order => ({
 export const setCurrentOrderFailure = order => ({
   type: SET_CURRENT_ORDER_FAILURE,
   payload: order
+});
+
+export const addNewOrderStart = () => ({
+  type: ADD_NEW_ORDER_START,
+  payload: true
 });
 
 export const addNewOrderSuccess = order => ({
@@ -96,6 +102,7 @@ export function updateOrder(order) {
 
 export function addNewOrder(order) {
   return dispatch => {
+    dispatch(addNewOrderStart());
     return orders.addNewOrder(order)
       .then(
         response => response,

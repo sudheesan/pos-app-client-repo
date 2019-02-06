@@ -5,6 +5,8 @@ import ChangeOrder from './ChangeOrder';
 import { setCurrentOrderSuccess } from '../../actions/orderAction';
 import '../../styles/main.css';
 import { FaPlusCircle } from 'react-icons/fa';
+import BlockUi from 'react-block-ui';
+import 'react-block-ui/style.css';
 
 
 class NewOrder extends Component {
@@ -36,7 +38,9 @@ class NewOrder extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} size='lg' centered={true}>
                     <ModalHeader toggle={this.toggle}>Order <Badge color="secondary">New</Badge></ModalHeader>
                     <ModalBody>
+                    <BlockUi blocking={this.props.isAddingOrder}>
                         <ChangeOrder/>
+                    </BlockUi>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={this.toggle}>Back</Button>
@@ -47,6 +51,8 @@ class NewOrder extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    isAddingOrder: state.orderReducer.isOrderAdding
+});
 
-
-export default connect()(NewOrder);
+export default connect(mapStateToProps)(NewOrder);
