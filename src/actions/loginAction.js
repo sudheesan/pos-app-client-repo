@@ -45,7 +45,7 @@ export function login(credentials) {
         dispatch(loginSuccess(json.data.auth));
       })
       .catch((error) => {
-        ActionAlert.createNotification({ type: 'error', notification: error.response.data.message })();
+        ActionAlert.createNotification({ type: 'error', notification: error.response.data.message ,resource:'Login'})();
         dispatch(loginFailure(error))
       });
   };

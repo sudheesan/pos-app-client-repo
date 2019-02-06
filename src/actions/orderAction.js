@@ -87,14 +87,14 @@ export function updateOrder(order) {
         (error) => {throw error} )
       .then((json) => {
         dispatch(updateOrderSuccess(json.data));
-        ActionAlert.createNotification({type:'success',notification:'Order updated successfully'})();
+        ActionAlert.createNotification({type:'success',notification:'Order updated successfully',resource:'Order'})();
         dispatch(setCurrentOrderSuccess(json.data));
         dispatch(fetchAllPendingOrders());
       }
       )
       .catch((error) => {
         dispatch(updateOrderFailure(error));
-        ActionAlert.createNotification({type:'error',notification:'error while updating order'})();
+        ActionAlert.createNotification({type:'error',notification:'error while updating order',resource:'Order'})();
       });
   }
 }
@@ -109,14 +109,14 @@ export function addNewOrder(order) {
         (error) =>{throw error} )
       .then((json) => {
         dispatch(addNewOrderSuccess(json.data));
-        ActionAlert.createNotification({type:'success',notification:'Order added successfully'})();
+        ActionAlert.createNotification({type:'success',notification:'Order added successfully',resource:'Order'})();
         dispatch(setCurrentOrderSuccess(json.data));
         dispatch(fetchAllPendingOrders());
       }
       )
       .catch((error) => {
         dispatch(addNewOrderFailure(error));
-        ActionAlert.createNotification({type:'warning',notification:error.response.data.message})();
+        ActionAlert.createNotification({type:'warning',notification:error.response.data.message,resource:'Order'})();
       });
   }
 }

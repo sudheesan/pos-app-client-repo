@@ -11,13 +11,13 @@ export default{
                     NotificationManager.info(alert.notification);
                     break;
                 case 'success':
-                    NotificationManager.success(alert.notification, 'Order', 2000);
+                    NotificationManager.success(alert.notification, alert.resource, 3000);
                     break;
                 case 'warning':
-                    NotificationManager.warning(alert.notification, 'Order', 2000);
+                    NotificationManager.warning(alert.notification, alert.resource, 3000);
                     break;
                 case 'error':
-                    NotificationManager.error(alert.notification, 'Order', 2000);
+                    NotificationManager.error(alert.notification, alert.resource, 3000);
                     break;
                 default:
                     break;
