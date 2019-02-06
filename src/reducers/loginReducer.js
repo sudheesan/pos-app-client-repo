@@ -18,11 +18,10 @@ const loginreducer = (state = initialState, action) => {
                 ...state,
                 isAuthenticating : false,
                 auth: action.payload,
-                isLogin: action.payload
+                isLogin: false
             }
 
         case LOGIN_FAILURE:
-            console.log("login failure")
             return {
                 ...state,
                 error: action.payload.error,

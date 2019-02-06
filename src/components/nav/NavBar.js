@@ -7,16 +7,14 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
 import { setIsLoginSuccess } from '../../actions/loginAction';
-import cookies from '../../utils/cookie.util'
-
+import cookies from '../../utils/cookie.util';
+import '../../styles/main.css';
 
 class NavBar extends Component {
   constructor(props) {
@@ -41,9 +39,6 @@ class NavBar extends Component {
     this.props.dispatch(setIsLoginSuccess(true));
   }
 
-
-
-
   render() {
     return (
       <div>
@@ -52,20 +47,14 @@ class NavBar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-              </NavItem>
               <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  <span style={{ color: 'white' }}>
+                <DropdownToggle nav caret  className='text-white'> 
                     Options
-                  </span>
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem onClick={this.logout}>
 
                     Logout
-
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
