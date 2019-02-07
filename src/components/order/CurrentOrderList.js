@@ -4,6 +4,7 @@ import OrderListItem from "./OrderListItem";
 import NewOrder from "./NewOrder";
 import { fetchAllPendingOrders } from '../../actions/orderAction';
 import ActionSpiner from '../spinner/ActionSpinner';
+import EmptyOrderList from './EmptyOrderList';
 import { Table, Row, Col } from 'reactstrap';
 import '../../styles/main.css';
 import { FaHashtag } from 'react-icons/fa';
@@ -39,7 +40,7 @@ class CurrentOrderList extends Component {
                 <Row>
                     <Col className='orderlist-container' md={{ size: 8, offset: 2 }}>
                        {this.props.isLoading && <ActionSpiner width='5rem' height='5rem'  color='secondary'></ActionSpiner>}
-                       {!this.props.isLoading &&  <Table  hover>
+                       { currentPendingOrderItemArray[0] && !this.props.isLoading &&   <Table  hover>
                             <thead>
                                 <tr>
                                     <th className='order-list-table-header'><FaHashtag></FaHashtag></th>
@@ -51,6 +52,8 @@ class CurrentOrderList extends Component {
                                 {currentPendingOrderItemArray}
                             </tbody>
                         </Table>} 
+
+                        {!currentPendingOrderItemArray[0] && !this.props.isLoading && <EmptyOrderList></EmptyOrderList>}
                     </Col>
 
                 </Row>
