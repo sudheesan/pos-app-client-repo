@@ -142,7 +142,7 @@ class ChangeOrder extends Component {
         return (
             <div>
                 <Container>
-                    <Row>
+                    <Row className='order-item-container'>
                         <Table hover>
                             <thead className='editable-order-table-thead'>
                                 <tr>
