@@ -41,11 +41,11 @@ class CurrentOrderList extends Component {
                     <Col className='orderlist-container' md={{ size: 8, offset: 2 }}>
                        {this.props.isLoading && <ActionSpiner width='5rem' height='5rem'  color='secondary'></ActionSpiner>}
                        { currentPendingOrderItemArray[0] && !this.props.isLoading &&   <Table  hover>
-                            <thead>
+                            <thead className='order-list-table-header'>
                                 <tr>
-                                    <th className='order-list-table-header'><FaHashtag></FaHashtag></th>
-                                    <th className='text-center order-list-table-header'>Status</th>
-                                    <th className='text-center order-list-table-header'>Total amount</th>
+                                    <th className='order-list-number-lable'><FaHashtag></FaHashtag></th>
+                                    <th className='text-center order-list-number-lable'>Status</th>
+                                    <th className='text-center order-list-number-lable'>Total amount</th>
                                 </tr>
                             </thead>
                             <tbody>

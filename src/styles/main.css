@@ -29,11 +29,20 @@
   border-radius: 8px 8px 0px 0px;
 }
 
-.order-list-table-header{
+.order-list-number-lable{
 
   font-weight: bolder;
   font-size: 30px
  
+}
+
+.order-item-container{
+    max-height: 36vh;
+    overflow: auto;
+}
+
+.order-list-table-header{
+  background:  #a9a9a9ba;;
 }
 
 .orderlist-container {
